@@ -1,7 +1,6 @@
 package knot.fs2
 
-import cats.implicits.*
-import cats.{Applicative, ApplicativeThrow, Contravariant, FlatMap, Functor, Monad, MonadThrow}
+import cats.*
 import cats.arrow.{Arrow, Choice}
 import knot.Kleisli
 import fs2.Stream

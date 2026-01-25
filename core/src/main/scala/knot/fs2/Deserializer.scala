@@ -5,7 +5,6 @@ import cats.evidence.As
 import cats.implicits.*
 import fs2.*
 import knot.Kleisli
-import knot.fs2.*
 
 /** Namespace for Deserializer monad
   *

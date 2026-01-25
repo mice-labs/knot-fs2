@@ -1,6 +1,6 @@
 package knot.fs2
 
-import cats.{Applicative, ApplicativeThrow, Functor}
+import cats.*
 import cats.implicits.*
 import cats.evidence.As
 import fs2.*

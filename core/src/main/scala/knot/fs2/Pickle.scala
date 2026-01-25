@@ -1,7 +1,6 @@
 package knot.fs2
 
 import cats.Contravariant
-import knot.data.Serializer
 import fs2.*
 
 /** Namespace for Pickle monad
