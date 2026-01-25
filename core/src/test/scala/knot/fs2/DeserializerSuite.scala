@@ -26,7 +26,6 @@ object DeserializerSuite extends SimpleIOSuite with Discipline {
   checkAll("Deserializer[Id, MiniInt, *]", CommutativeMonadTests[Deserializer[Id, MiniInt, *]].commutativeMonad[Int, Int, Int])
   checkAll("Deserializer[Id, MiniInt, Int]", MonoidTests[Deserializer[Id, MiniInt, Int]].monoid)
   checkAll("Deserializer[IO, MiniInt, *]", MonadErrorTests[Deserializer[IO, MiniInt, *], Throwable].monadError[Int, Int, Int])
-  checkAll("Deserializer[IO, MiniInt, *]", ContravariantMonoidalTests[Deserializer[IO, MiniInt, *]].monadError[Int, Int, Int])
   checkAll("Deserializer[Id, MiniInt, *]", MonadTests[Deserializer[Id, MiniInt, *]](Deserializer.monadForDeserializer).monad[Int, Int, Int])
   checkAll("Deserializer[Id, *, Int]", ContravariantTests[Deserializer[Id, *, Int]].contravariant[MiniInt, Int, Boolean])
   checkAll(

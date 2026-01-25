@@ -24,31 +24,31 @@ object SerializerSuite extends SimpleIOSuite with Discipline {
   checkAll("Serializer[Id, *, *]", ChoiceTests[Serializer[Id, *, *]].choice[MiniInt, Boolean, Int, Int])
   checkAll("Serializer[Id, MiniInt, *]", MonadTests[Serializer[Id, MiniInt, *]].monad[Int, Int, Int])
   checkAll("Serializer[Id, *, Int]", ContravariantTests[Serializer[Id, *, Int]].contravariant[MiniInt, Int, Boolean])
-  pureTest("map") {
+  pureTest("Serializer[Id, List[Int], Int]: map") {
     val fa = Serializer
       .instance[Id, List[Int], Int](Stream.emits)
       .map(_ + 1)
     expect.eql(fa.run(List(1, 2, 3)), Stream(2, 3, 4))
   }
-  pureTest("dimap") {
+  pureTest("Serializer[Id, List[Int], Int]: dimap") {
     val fa = Serializer
       .instance[Id, List[Int], Int](Stream.emits)
       .dimap[Int, String](i => List.fill(i)(1))(_.toString)
     expect.eql(fa.run(3), Stream("1", "1", "1"))
   }
-  pureTest("lmap") {
+  pureTest("Serializer[Id, List[Int], Int]: lmap") {
     val fa = Serializer
       .instance[Id, List[Int], Int](Stream.emits)
       .lmap[Int](i => List.fill(i)(1))
     expect.eql(fa.run(3), Stream(1, 1, 1))
   }
-  pureTest("rmap") {
+  pureTest("Serializer[Id, List[Int], Int]: rmap") {
     val fa = Serializer
       .instance[Id, List[Int], Int](Stream.emits)
       .rmap(_ + 1)
     expect.eql(fa.run(List(1, 2, 3)), Stream(2, 3, 4))
   }
-  pureTest("andThen") {
+  pureTest("Serializer[Id, List[Int], Int]: andThen") {
     val fa = Serializer.instance[Id, List[Int], Int](Stream.emits)
     val fb = Serializer.instance[Id, Int, String](i => Stream(i.toString))
     val fc = fa.andThen(fb.run)
@@ -58,13 +58,13 @@ object SerializerSuite extends SimpleIOSuite with Discipline {
       expect.eql(fd.run(List(1, 2, 3)), Stream("1", "2", "3")) and
       expect.eql(fe.run(List(1, 2, 3)), Stream("1", "2", "3"))
   }
-  pureTest("compose") {
+  pureTest("Serializer[Id, Int, String]: compose") {
     val fa = Serializer.instance[Id, Int, String](i => Stream(i.toString))
     val fb = Serializer.instance[Id, List[Int], Int](Stream.emits)
     val fc = fa <<< fb
     expect.eql(fc.run(List(1, 2, 3)), Stream("1", "2", "3"))
   }
-  pureTest("second") {
+  pureTest("Serializer[Id, List[Int], Int]: second") {
     val fa = Serializer
       .instance[Id, List[Int], Int](Stream.emits)
       .second[Char]

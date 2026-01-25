@@ -23,7 +23,7 @@ object UnpickleSuite extends SimpleIOSuite with Discipline {
     Arbitrary(Arbitrary.arbitrary[Stream[F, Byte] => F[A]].map(Unpickle.instance))
 
   checkAll("Unpickle[IO, MiniInt, *]", ApplicativeErrorTests[Unpickle[IO, *], Throwable].applicativeError[Int, Int, Int])
-  pureTest("map") {
+  pureTest("Unpickle[Int, Int]: map") {
     val fa = Unpickle
       .instance[Id, Int](s => s.compile.fold(0)(_ + _))
       .map(_.toString)

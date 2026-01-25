@@ -30,7 +30,7 @@ object ImplicitsSpec extends SimpleIOSuite {
       List(1, 2, 3)
     )
   }
-  pureTest("Stream[Id, Int]: deserialize") {
+  pureTest("Stream[Id, Byte]: unpickle") {
     given Unpickle[Id, String] =
       Unpickle.instance(s => new String(s.compile.toList.toArray))
     expect.eql(

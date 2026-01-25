@@ -14,7 +14,7 @@ object Dependencies {
   }
 
   object Knot {
-    private val version = "0.0.2"
+    private val version = "0.0.3"
     val core            = "team.mice" %% "knot-core" % version
   }
 
