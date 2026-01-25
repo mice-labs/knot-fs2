@@ -1,0 +1,52 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 11
+          cache: sbt
+      - name: Setup SBT
+        uses: sbt/setup-sbt@v1
+      - name: Lint check
+        run: sbt +scalafmtCheckAll scalafmtSbtCheck
+  test:
+    name: Tests & Coverage
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 11
+          cache: sbt
+      - name: Setup SBT
+        uses: sbt/setup-sbt@v1
+      - name: Test
+        run: sbt +coverageOn test coverageReport coverageAggregate
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: target/scala-*/scoverage-report/
+          retention-days: 3
