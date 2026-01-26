@@ -45,7 +45,8 @@ lazy val root = project
     publish / skip := true
   )
   .aggregate(
-    core
+    core,
+    circe
   )
 
 lazy val core = project
