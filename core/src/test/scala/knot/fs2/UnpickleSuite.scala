@@ -13,8 +13,6 @@ import weaver.SimpleIOSuite
 import weaver.discipline.Discipline
 
 object UnpickleSuite extends SimpleIOSuite with Discipline {
-  given ExhaustiveCheck[Byte] =
-    ExhaustiveCheck.instance((Byte.MinValue to Byte.MaxValue).map(_.toByte).toList)
 
   given [F[_], A](using Eq[Stream[F, Byte] => F[A]]): Eq[Unpickle[F, A]] =
     Eq.by[Unpickle[F, A], Stream[F, Byte] => F[A]](_.run)
@@ -23,7 +21,7 @@ object UnpickleSuite extends SimpleIOSuite with Discipline {
     Arbitrary(Arbitrary.arbitrary[Stream[F, Byte] => F[A]].map(Unpickle.instance))
 
   checkAll("Unpickle[IO, MiniInt, *]", ApplicativeErrorTests[Unpickle[IO, *], Throwable].applicativeError[Int, Int, Int])
-  pureTest("Unpickle[Int, Int]: map") {
+  pureTest("Unpickle[Id, Int]: map") {
     val fa = Unpickle
       .instance[Id, Int](s => s.compile.fold(0)(_ + _))
       .map(_.toString)

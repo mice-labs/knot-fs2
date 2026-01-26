@@ -1,9 +1,9 @@
-package knot.fs2.util
+package knot.fs2.circe.util
 
-import cats.{Eq, Id}
 import cats.effect.IO
 import cats.effect.unsafe.implicits.global
 import cats.laws.discipline.ExhaustiveCheck
+import cats.{Eq, Id}
 import fs2.{Compiler, Stream}
 import org.scalacheck.{Arbitrary, Cogen, Gen}
 

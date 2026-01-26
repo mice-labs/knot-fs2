@@ -67,3 +67,25 @@ lazy val core = project
       Dependencies.Cats.effectLaws
     ).map(_ % "test")
   )
+
+lazy val circe = project
+  .in(file("circe"))
+  .enablePlugins(GitVersioning)
+  .settings(
+    name := "knot-fs2-circe",
+    commonSettings,
+    publishSettings,
+    coverageMinimumStmtTotal := 80,
+    coverageFailOnMinimum    := true,
+    libraryDependencies ++= Seq(
+      Dependencies.Circe.parser,
+      Dependencies.Circe.yaml,
+      Dependencies.Jawn.fs2
+    ) ++ Seq(
+      Dependencies.Weaver.cats,
+      Dependencies.Weaver.discipline,
+      Dependencies.Cats.laws,
+      Dependencies.Cats.effectLaws
+    ).map(_ % "test")
+  )
+  .dependsOn(core)
