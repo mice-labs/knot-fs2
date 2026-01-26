@@ -5,7 +5,7 @@ import cats.implicits.*
 import cats.evidence.As
 import fs2.*
 
-/** Namespace for Unpickle monad
+/** Namespace for Unpickle
   *
   * Computation type: Conversion from an Stream[F,Byte] to F[A]
   *
