@@ -17,13 +17,8 @@ object Dependencies {
     val yaml = "io.circe" %% "circe-yaml" % "0.16.1"
   }
 
-  object Jawn {
-    private val version = "2.4.0"
-    val fs2             = "org.typelevel" %% "jawn-fs2" % version
-  }
-
   object Knot {
-    private val version = "0.0.4"
+    private val version = "0.0.5"
     val core            = "team.mice" %% "knot-core" % version
   }
 
