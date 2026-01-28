@@ -30,9 +30,9 @@ object Dependencies {
   }
 
   object Weaver {
-    private val version      = "0.11.3"
-    val cats: ModuleID       = "org.typelevel" %% "weaver-cats"       % version
-    val scalacheck: ModuleID = "org.typelevel" %% "weaver-scalacheck" % version
-    val discipline: ModuleID = "org.typelevel" %% "weaver-discipline" % version
+    private val version = "0.11.3"
+    val cats            = "org.typelevel" %% "weaver-cats"       % version
+    val scalacheck      = "org.typelevel" %% "weaver-scalacheck" % version
+    val discipline      = "org.typelevel" %% "weaver-discipline" % version
   }
 }
