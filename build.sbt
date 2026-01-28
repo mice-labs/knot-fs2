@@ -46,6 +46,7 @@ lazy val root = project
   )
   .aggregate(
     core,
+    io,
     circe
   )
 
@@ -69,6 +70,26 @@ lazy val core = project
     ).map(_ % "test")
   )
 
+lazy val io = project
+  .in(file("io"))
+  .enablePlugins(GitVersioning)
+  .settings(
+    name := "knot-fs2-io",
+    commonSettings,
+    publishSettings,
+    coverageMinimumStmtTotal := 80,
+    coverageFailOnMinimum    := true,
+    libraryDependencies ++= Seq(
+      Dependencies.FS2.io
+    ) ++ Seq(
+      Dependencies.Weaver.cats,
+      Dependencies.Weaver.discipline,
+      Dependencies.Cats.laws,
+      Dependencies.Cats.effectLaws
+    ).map(_ % "test")
+  )
+  .dependsOn(core)
+
 lazy val circe = project
   .in(file("circe"))
   .enablePlugins(GitVersioning)
@@ -79,9 +100,8 @@ lazy val circe = project
     coverageMinimumStmtTotal := 80,
     coverageFailOnMinimum    := true,
     libraryDependencies ++= Seq(
-      Dependencies.Circe.parser,
-      Dependencies.Circe.yaml,
-      Dependencies.Jawn.fs2
+      Dependencies.FS2.dataCirce,
+      Dependencies.Circe.yaml
     ) ++ Seq(
       Dependencies.Weaver.cats,
       Dependencies.Weaver.discipline,

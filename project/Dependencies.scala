@@ -14,9 +14,7 @@ object Dependencies {
   }
 
   object Circe {
-    private val version = "0.14.5"
-    val parser          = "io.circe" %% "circe-parser" % version
-    val yaml            = "io.circe" %% "circe-yaml"   % "0.16.1"
+    val yaml = "io.circe" %% "circe-yaml" % "0.16.1"
   }
 
   object Jawn {
@@ -31,8 +29,9 @@ object Dependencies {
 
   object FS2 {
     private val version = "3.12.2"
-    val core            = "co.fs2" %% "fs2-core" % version
-    val io              = "co.fs2" %% "fs2-io"   % version
+    val core            = "co.fs2"    %% "fs2-core"            % version
+    val io              = "co.fs2"    %% "fs2-io"              % version
+    val dataCirce       = "org.gnieh" %% "fs2-data-json-circe" % "1.12.0"
   }
 
   object Weaver {
