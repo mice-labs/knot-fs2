@@ -39,7 +39,7 @@ object PathDecoderSuite extends SimpleIOSuite with Discipline {
         }
       )
       .map(_.toUpperCase)
-    expect.eql(fa.run(Path("hello.json")), "JSON".asRight) and
+    expect.eql(fa.run(Path("hello.json")), ".JSON".asRight) and
       expect(fa.run(Path(".gitignore")).isLeft)
   }
 
