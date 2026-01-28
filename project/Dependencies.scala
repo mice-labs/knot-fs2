@@ -14,31 +14,25 @@ object Dependencies {
   }
 
   object Circe {
-    private val version = "0.14.5"
-    val parser          = "io.circe" %% "circe-parser" % version
-    val yaml            = "io.circe" %% "circe-yaml"   % "0.16.1"
-  }
-
-  object Jawn {
-    private val version = "2.4.0"
-    val fs2             = "org.typelevel" %% "jawn-fs2" % version
+    val yaml = "io.circe" %% "circe-yaml" % "0.16.1"
   }
 
   object Knot {
-    private val version = "0.0.4"
+    private val version = "0.0.5"
     val core            = "team.mice" %% "knot-core" % version
   }
 
   object FS2 {
     private val version = "3.12.2"
-    val core            = "co.fs2" %% "fs2-core" % version
-    val io              = "co.fs2" %% "fs2-io"   % version
+    val core            = "co.fs2"    %% "fs2-core"            % version
+    val io              = "co.fs2"    %% "fs2-io"              % version
+    val dataCirce       = "org.gnieh" %% "fs2-data-json-circe" % "1.12.0"
   }
 
   object Weaver {
-    private val version      = "0.11.3"
-    val cats: ModuleID       = "org.typelevel" %% "weaver-cats"       % version
-    val scalacheck: ModuleID = "org.typelevel" %% "weaver-scalacheck" % version
-    val discipline: ModuleID = "org.typelevel" %% "weaver-discipline" % version
+    private val version = "0.11.3"
+    val cats            = "org.typelevel" %% "weaver-cats"       % version
+    val scalacheck      = "org.typelevel" %% "weaver-scalacheck" % version
+    val discipline      = "org.typelevel" %% "weaver-discipline" % version
   }
 }

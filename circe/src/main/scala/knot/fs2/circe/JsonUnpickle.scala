@@ -7,9 +7,8 @@ import cats.evidence.As
 import io.circe.Decoder
 import knot.fs2.Unpickle
 import fs2.*
-import io.circe.jawn.CirceSupportParser
-import org.typelevel.jawn.AsyncParser
-import org.typelevel.jawn.fs2.*
+import fs2.data.json._
+import fs2.data.json.circe._
 
 /** Namespace for Json unpickle
   *
@@ -50,11 +49,6 @@ object JsonUnpickle:
   def raiseError[F[_]: ApplicativeThrow, A](e: Throwable): JsonUnpickle[F, A] =
     liftF(e.raiseError[F, A])
 
-  val circeSupportParser =
-    new CirceSupportParser(maxValueSize = None, allowDuplicateKeys = false)
-
-  import circeSupportParser.facade
-
   /** Unpickle using standard json syntax
     * @tparam F
     *   effect type
@@ -63,11 +57,12 @@ object JsonUnpickle:
     */
   def json[F[_]: Concurrent, A: Decoder]: JsonUnpickle[F, A] =
     instance { s =>
-      s.chunks
-        .parseJson(AsyncParser.SingleValue)
+      s
+        .through(fs2.text.utf8.decode)
+        .through(ast.parse)
         .compile
         .lastOrError
-        .flatMap(_.as[A].liftTo[F])
+        .flatMap(_.as.liftTo)
     }
 
   /** Unpickle using standard yaml syntax
@@ -83,7 +78,7 @@ object JsonUnpickle:
         .through(text.utf8.decode)
         .compile
         .string
-        .flatMap(s => io.circe.yaml.parser.decode(s).liftTo[F])
+        .flatMap(s => io.circe.yaml.parser.decode(s).liftTo)
     }
 
   /** Unpickle using a superset of json syntax (json, yaml)
