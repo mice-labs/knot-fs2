@@ -31,19 +31,25 @@ object PathDecoderSuite extends SimpleIOSuite with Discipline {
   checkAll("PathDecoder[MiniInt, *]", MonadErrorTests[PathDecoder[MiniInt, *], MiniInt].monadError[Int, Int, Int])
 
   pureTest("PathDecoder[String, String]: map") {
-    val fa = PathDecoder.instance(p => p.extName match {
-      case "" => "File does not have an extension".asLeft
-      case extName => extName.asRight
-    }).map(_.toUpperCase)
+    val fa = PathDecoder
+      .instance(p =>
+        p.extName match {
+          case ""      => "File does not have an extension".asLeft
+          case extName => extName.asRight
+        }
+      )
+      .map(_.toUpperCase)
     expect.eql(fa.run(Path("hello.json")), "JSON".asRight) and
       expect(fa.run(Path(".gitignore")).isLeft)
   }
 
   object ImplicitResolution:
     given PathDecoder[String, String] =
-      PathDecoder.instance(p => p.extName match {
-        case "" => "File does not have an extension".asLeft
-        case extName => extName.asRight
-      })
+      PathDecoder.instance(p =>
+        p.extName match {
+          case ""      => "File does not have an extension".asLeft
+          case extName => extName.asRight
+        }
+      )
     PathDecoder[String, String]
 }
